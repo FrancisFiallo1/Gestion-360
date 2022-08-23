@@ -6,7 +6,7 @@ const socketio = require('socket.io');
 const getConnection = require('./db.connection');
 
 // get config vars env
-dotenv.config({ path: './config.env' });
+dotenv.config({ path: './config1.env' });
 
 // init server
 const app = express();
