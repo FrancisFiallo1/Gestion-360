@@ -16,10 +16,48 @@ const io = socketio(server);
 // set static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+// API endpoint for saving sensor data
+app.get('/api/save', async (req, res) => {
+  const db = await getConnection();
+
+  try {
+    // query values of the url
+    const { temp_c, temp_f, hum } = req.query;
+    const date = new Date();
+    
+
+    // here should be saving the data
+    // see docs on (https://www.mongodb.com/docs/manual/reference/method/db.collection.insertOne/#mongodb-method-db.collection.insertOne)
+    if (temp_c && temp_f && hum) {
+      const sensor_data = db.collection('sensor_data');
+      sensor_data.insertOne( 
+        { 
+          humidity: hum, 
+          temperature_c: temp_c, 
+          temperature_f:temp_f, 
+          date: date
+        }
+      );
+    }
+
+
+    console.log(temp_c);
+    console.log(temp_f);
+    console.log(hum);
+    console.log(date);
+
+    // response to the client
+    res.send('Data saved on db');
+  } catch (error) {
+    console.log('server on api/save', error);
+  }
+});
+
 // when user connect to web socket
 io.on('connection',  async (socket) => {
 
-  const db = await getConnection()
+  const db = await getConnection();
   const collectionsToSend = [
     {
       collectionName: 'sensor_data',
