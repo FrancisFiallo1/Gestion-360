@@ -23,29 +23,54 @@ app.get('/api/save', async (req, res) => {
 
   try {
     // query values of the url
-    const { temp_c, temp_f, hum } = req.query;
+    const {
+      temp_c,
+      temp_f,
+      hum,
+      mac,
+      smoke,
+      tank_value,
+      sensor_tank_value,
+      litros_in,
+      litros_out,
+      litros_totales
+    } = req.query;
     const date = new Date();
+    let data = {};
     
 
     // here should be saving the data
     // see docs on (https://www.mongodb.com/docs/manual/reference/method/db.collection.insertOne/#mongodb-method-db.collection.insertOne)
-    if (temp_c && temp_f && hum) {
+    if (temp_c && temp_f && hum && smoke) {
       const sensor_data = db.collection('sensor_data');
-      sensor_data.insertOne( 
-        { 
-          humidity: hum, 
-          temperature_c: temp_c, 
-          temperature_f:temp_f, 
-          date: date
-        }
-      );
+      data = { 
+        device: mac,
+        humidity: hum, 
+        temperature_c: temp_c, 
+        temperature_f:temp_f,
+        smoke_level: smoke,
+        date: date
+      };
+
+      sensor_data.insertOne(data);
     }
 
+    if (tank_value && sensor_tank_value && litros_in && litros_out && litros_totales) {
+      const sensor_data = db.collection('sensor_ultrasonic');
+      data = { 
+        device: mac,
+        percent: tank_value,
+        tank_value: sensor_tank_value,
+        litros_in: litros_in,
+        litros_out: litros_out,
+        litros_total: litros_totales,
+        date: date
+      };
+  
+      sensor_data.insertOne(data);
+    }
 
-    console.log(temp_c);
-    console.log(temp_f);
-    console.log(hum);
-    console.log(date);
+    console.log(data);
 
     // response to the client
     res.send('Data saved on db');
