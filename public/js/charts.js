@@ -56,6 +56,21 @@ const lineCharts = [
         },
         options: baseOptions
     },
+    // Smoke chart
+    {
+        elementID: 'smoke_chart',
+        dataProp: 'smoke_level',
+        type: 'line',
+        instance: null,
+        baseDataSet: {
+            label: 'Humo',
+            backgroundColor: '#059669',
+            borderColor: '#059669',
+            data: [],
+            tension: 0.1,
+        },
+        options: baseOptions
+    },
 ]
 
 const doughnutChart = {

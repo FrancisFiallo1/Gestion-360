@@ -44,11 +44,20 @@
 
     <div class="grid grid-cols-2">
       <div class="bg-white rounded-lg border shadow-md shadow-2xl p-5 my-5">
-        <h2 class="text-2xl font-bold text-emerald-600 my-2 flex justify-center">
-          Temperatura
-          <span class="iconify mt-1" data-icon="mdi:temperature-fahrenheit"></span>
-        </h2>
-        <canvas id="temperature_f_chart" height="100"></canvas>
+        <div>
+          <h2 class="text-2xl font-bold text-emerald-600 my-2 flex justify-center">
+            Temperatura
+            <span class="iconify mt-1" data-icon="mdi:temperature-fahrenheit"></span>
+          </h2>
+          <canvas id="temperature_f_chart" height="100"></canvas>
+        </div>
+        <div class="mt-8">
+          <h2 class="text-2xl font-bold text-gray-600 my-2 flex justify-center">
+            Humo
+            <span class="iconify mt-1" data-icon="mdi:smoke"></span>
+          </h2>
+          <canvas id="smoke_chart" height="100"></canvas>
+        </div>
       </div>
 
       <div class="bg-white rounded-lg border shadow-md shadow-2xl p-5 my-5">

@@ -4,6 +4,7 @@ const path = require('path');
 const http = require('http');
 const socketio = require('socket.io');
 const getConnection = require('./db.connection');
+const { json } = require('body-parser');
 
 // get config vars env
 dotenv.config({ path: './config1.env' });
@@ -73,7 +74,7 @@ app.get('/api/save', async (req, res) => {
     console.log(data);
 
     // response to the client
-    res.send('Data saved on db');
+    res.send(`Data saved on db: ${JSON.stringify(data, null, 2)}`);
   } catch (error) {
     console.log('server on api/save', error);
   }
