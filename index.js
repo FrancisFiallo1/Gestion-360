@@ -58,7 +58,7 @@ app.get('/api/save', async (req, res) => {
 
     if (tank_value && sensor_tank_value && litros_in && litros_out && litros_totales) {
       const sensor_data = db.collection('sensor_ultrasonic');
-      data = { 
+      data = {
         device: mac,
         percent: tank_value,
         tank_value: sensor_tank_value,
