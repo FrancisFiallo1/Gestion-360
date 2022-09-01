@@ -5,7 +5,7 @@ renderCharts()
 // when get sensor data
 socket.on('sensor_data', (data) => {
   
-  console.log(data);
+  // console.log(data);
 
   const chartsData = data.slice(-20); // to show the last 20 elements in the charts
 
@@ -19,10 +19,10 @@ socket.on('sensor_data', (data) => {
 // when get sensor ultrasonic data
 socket.on('sensor_ultrasonic_data', (data) => {
 
-  console.log(data);
+  // console.log(data);
   
   const chartData = data.at(-1); // to show the last element
   
-  updateDoughnutChart(chartData);
+  updateDoughnutChart(chartData);  
   
 });

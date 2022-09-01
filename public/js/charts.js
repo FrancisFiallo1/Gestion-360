@@ -64,8 +64,8 @@ const lineCharts = [
         instance: null,
         baseDataSet: {
             label: 'Humo',
-            backgroundColor: '#059669',
-            borderColor: '#059669',
+            backgroundColor: 'gray',
+            borderColor: 'gray',
             data: [],
             tension: 0.1,
         },
@@ -155,5 +155,7 @@ const updateDoughnutChart = (data) => {
     if (data.percent < 0) {
         dataChart = [100, 0];
     }
-    updateChart(doughnutChart.instance, doughnutChart.data.labels, dataChart)
+    updateChart(doughnutChart.instance, doughnutChart.data.labels, dataChart);
+    document.getElementById('fuil_consume').innerHTML = `Combustible consumido hoy: ${data.litros_out}`;
+    document.getElementById('fuil_fill').innerHTML = `Combustible suministrado hoy: ${data.litros_in}`;
 }
