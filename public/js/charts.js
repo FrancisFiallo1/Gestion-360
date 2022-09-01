@@ -158,4 +158,5 @@ const updateDoughnutChart = (data) => {
     updateChart(doughnutChart.instance, doughnutChart.data.labels, dataChart);
     document.getElementById('fuil_consume').innerHTML = `Combustible consumido hoy: ${data.litros_out}`;
     document.getElementById('fuil_fill').innerHTML = `Combustible suministrado hoy: ${data.litros_in}`;
+    document.getElementById('fuil_total').innerHTML = `Combustible total: ${data.litros_total}Lt `;
 }
