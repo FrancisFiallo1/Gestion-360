@@ -24,5 +24,7 @@ socket.on('sensor_ultrasonic_data', (data) => {
   const chartData = data.at(-1); // to show the last element
   
   updateDoughnutChart(chartData);  
-  
+  if (parseFloat(data[data.length - 1].tank_value) > 1000) {
+    alert(`Combustible del generador en reserva, por favor suministrar combustible lo antes posible`);
+  }
 });
