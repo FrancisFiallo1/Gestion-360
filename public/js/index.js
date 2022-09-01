@@ -11,8 +11,8 @@ socket.on('sensor_data', (data) => {
 
   updateLineCharts(chartsData);
   renderDataTable(data.reverse());
-  if (data.smoke_level > 20) {
-    alert(`Hay Fuedo en el dispositivo ${data.mac}`);
+  if (parseFloat(data[data.length - 1].smoke_level) > 1000) {
+    alert(`Hay presencia de humo en el dispositivo ${data[data.length - 1].device}`);
   }
 });
 
