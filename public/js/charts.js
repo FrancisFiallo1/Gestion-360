@@ -259,14 +259,11 @@ const updateLineCharts = (data) => {
 
 // update every line chart
 const updateTransferLineCharts = (data) => {
-    if (data.data) {
-        const dates = data.map(data => { return moment(data.date).format('HH:mm:ss') });
-        transferLineCharts.forEach(chart => {
-            const messure = data.map(data => { return data.data[chart.dataProp].replace(/[^\d.-]/g, '') });
-            updateChart(chart.instance, dates, messure);
-        });
-    };
-
+    const dates = data.map(data => { return moment(data.date).format('HH:mm:ss') });
+    transferLineCharts.forEach(chart => {
+        const messure = data.map(data => { return data.data[chart.dataProp].replace(/[^\d.-]/g, '') });
+        updateChart(chart.instance, dates, messure);
+    });
 }
 
 // update doughnut chart 
