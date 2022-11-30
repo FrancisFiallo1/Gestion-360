@@ -16,6 +16,13 @@ socket.on('sensor_data', (data) => {
   }
 });
 
+socket.on('sensor_transfer', (data) => {
+  console.log(data);
+  const chartsData = data.slice(-20); // to show the last 20 elements in the charts
+
+  updateTransferLineCharts(chartsData);
+});
+
 // when get sensor ultrasonic data
 socket.on('sensor_ultrasonic_data', (data) => {
 
@@ -28,6 +35,8 @@ socket.on('sensor_ultrasonic_data', (data) => {
     // alert(`Combustible del generador en reserva, por favor suministrar combustible lo antes posible`);
   }
 });
+
+
 
 // set the modal menu element
 const settingsButton = document.getElementById('settings-button');

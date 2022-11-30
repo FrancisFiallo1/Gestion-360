@@ -73,6 +73,24 @@ const lineCharts = [
     },
 ]
 
+const transferLineCharts = [
+    // volt chart
+    {
+        elementID: 'voltage_chart',
+        dataProp: 'voltage',
+        type: 'line',
+        instance: null,
+        baseDataSet: {
+            label: 'Voltage',
+            backgroundColor: '#256389',
+            borderColor: '#256389',
+            data: [],
+            tension: 0.1,
+        },
+        options: baseOptions
+    },
+]
+
 const doughnutChart = {
     elementID: 'fuil_chart',
     instance: null,
@@ -141,6 +159,15 @@ const updateChart = (chart, labels, data) => {
 const updateLineCharts = (data) => {
     const dates = data.map(data => { return moment(data.date).format('HH:mm:ss') });
     lineCharts.forEach(chart => {
+        const messure = data.map(data => { return data[chart.dataProp] });
+        updateChart(chart.instance, dates, messure)
+    })
+}
+
+// update every line chart
+const updateTransferLineCharts = (data) => {
+    const dates = data.map(data => { return moment(data.date).format('HH:mm:ss') });
+    transferLineCharts.forEach(chart => {
         const messure = data.map(data => { return data[chart.dataProp] });
         updateChart(chart.instance, dates, messure)
     })

@@ -5,6 +5,7 @@ const http = require('http');
 const socketio = require('socket.io');
 const getConnection = require('./db.connection');
 const { json } = require('body-parser');
+const { Console } = require('console');
 
 // get config vars env
 dotenv.config({ path: './config1.env' });
@@ -25,6 +26,20 @@ const getDbConnect = async () => {
   }
 
   return db;
+}
+
+const formatTransferData = (data) => {
+  if (data) {
+    data.forEach(element => {
+      splitedData = element.data.split('-')
+      element.data = splitedData.reduce((acc, elem) => {
+        item = elem.split(':');
+        acc[item[0]] = item[1];
+        return acc;
+      }, {});
+    });
+  }
+  return data;
 }
 
 // API endpoint for saving sensor data
@@ -83,7 +98,8 @@ app.get('/api/save', async (req, res) => {
       const sensor_data = db.collection('sensor_transfer');
       data = {
         device: mac,
-        data: data_transfer
+        data: data_transfer,
+        date: date
       };
   
       sensor_data.insertOne(data);
@@ -149,10 +165,12 @@ io.on('connection',  async (socket) => {
   const sendData = async (collectionName, socketEvent, limit) => {
     const collection = db.collection(collectionName);
     const data = await collection.find().sort({ _id: -1 }).limit(limit).toArray();
-    if (collectionName === 'sensor_transfer' && data.length === 0) {
+    if (collectionName === 'sensor_transfer' && data.length > 0) {
+      
+      formatTransferData(data);
       console.log(data);
     }
-    socket.emit(socketEvent, data)
+    socket.emit(socketEvent, data);
   }
 
   const sendAllData = () => {
