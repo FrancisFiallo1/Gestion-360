@@ -71,11 +71,11 @@ app.get('/api/save', async (req, res) => {
       sensor_data.insertOne(data);
     }
 
-    if (data_tranfer) {
+    // if (data_tranfer) {
 
-      //insertar en base de datos del transfer
+    //   //insertar en base de datos del transfer
 
-    }
+    // }
 
     console.log(data);
 
