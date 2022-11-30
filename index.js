@@ -71,12 +71,44 @@ app.get('/api/save', async (req, res) => {
       sensor_data.insertOne(data);
     }
 
+    if (data_tranfer) {
+
+      //insertar en base de datos del transfer
+
+    }
+
     console.log(data);
 
     // response to the client
     res.send(`Data saved on db: ${JSON.stringify(data, null, 2)}`);
   } catch (error) {
     console.log('server on api/save', error);
+  }
+});
+
+//API endpoint for get configuration 
+app.get('/api/getconfig', async (req, res) => {
+  const db = await getConnection();
+  const config = db.collection('sensor_configuration');
+  const data = config || {};
+  res.send('Config');
+});
+
+//API endpoint for get configuration 
+app.get('/api/setconfig', async (req, res) => {
+  const db = await getConnection();
+  try {
+    // const {} = req.query;
+    // const config = db.collection('sensor_configuration');
+
+    // data = {
+
+    // };
+
+    // config.insertOne(data);
+    res.send(`Config Saved`);
+  } catch (error) {
+    console.log(error);
   }
 });
 

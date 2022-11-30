@@ -28,3 +28,20 @@ socket.on('sensor_ultrasonic_data', (data) => {
     alert(`Combustible del generador en reserva, por favor suministrar combustible lo antes posible`);
   }
 });
+
+// set the modal menu element
+const settingsButton = document.getElementById('settings-button');
+const modal = document.getElementById('defaultModal');
+
+const toogleModel = function() {
+  if (modal.style.display === "none") {
+    modal.style.display = "block";
+  } else {
+    modal.style.display = "none";
+  }
+}
+
+settingsButton.onclick = toogleModel;
+
+
+
