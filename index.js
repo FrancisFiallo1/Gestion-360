@@ -83,7 +83,7 @@ app.get('/api/save', async (req, res) => {
       const sensor_data = db.collection('sensor_transfer');
       data = {
         device: mac,
-        sensor_data: sensor_data
+        data: data_transfer
       };
   
       sensor_data.insertOne(data);
@@ -149,7 +149,7 @@ io.on('connection',  async (socket) => {
   const sendData = async (collectionName, socketEvent, limit) => {
     const collection = db.collection(collectionName);
     const data = await collection.find().sort({ _id: -1 }).limit(limit).toArray();
-    if (collectionName === 'sensor_transfer') {
+    if (collectionName === 'sensor_transfer' && data.length === 0) {
       console.log(data);
     }
     socket.emit(socketEvent, data)
