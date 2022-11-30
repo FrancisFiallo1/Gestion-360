@@ -42,7 +42,7 @@ app.get('/api/save', async (req, res) => {
       litros_in,
       litros_out,
       litros_totales,
-      data_tranfer
+      data_transfer
     } = req.query;
     const date = new Date();
     let data = {};
@@ -79,10 +79,14 @@ app.get('/api/save', async (req, res) => {
       sensor_data.insertOne(data);
     }
 
-    if (data_tranfer) {
-      console.log(data_tranfer);
-      //insertar en base de datos del transfer
-
+    if (data_transfer) {
+      const sensor_data = db.collection('sensor_transfer');
+      data = {
+        device: mac,
+        sensor_data: sensor_data
+      };
+  
+      sensor_data.insertOne(data);
     }
 
     console.log(data);
