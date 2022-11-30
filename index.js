@@ -16,12 +16,19 @@ const io = socketio(server);
 
 // set static folder
 app.use(express.static(path.join(__dirname, 'public')));
+let db = null;
 
+const getDbConnect = async () => {
+  if (!db) {
+    db = await getConnection();
+    console.log('new conection');
+  }
+
+  return db;
+}
 
 // API endpoint for saving sensor data
 app.get('/api/save', async (req, res) => {
-  const db = await getConnection();
-
   try {
     // query values of the url
     const {
@@ -73,7 +80,7 @@ app.get('/api/save', async (req, res) => {
     }
 
     if (data_tranfer) {
-
+      console.log(data_tranfer);
       //insertar en base de datos del transfer
 
     }
@@ -89,7 +96,7 @@ app.get('/api/save', async (req, res) => {
 
 //API endpoint for get configuration 
 app.get('/api/getconfig', async (req, res) => {
-  const db = await getConnection();
+  
   const config = db.collection('sensor_configuration');
   const data = config || {};
   res.send('Config');
@@ -97,7 +104,7 @@ app.get('/api/getconfig', async (req, res) => {
 
 //API endpoint for get configuration 
 app.get('/api/setconfig', async (req, res) => {
-  const db = await getConnection();
+  
   try {
     // const {} = req.query;
     // const config = db.collection('sensor_configuration');
@@ -116,7 +123,7 @@ app.get('/api/setconfig', async (req, res) => {
 // when user connect to web socket
 io.on('connection',  async (socket) => {
 
-  const db = await getConnection();
+  await getDbConnect();
   const collectionsToSend = [
     {
       collectionName: 'sensor_data',
@@ -152,4 +159,6 @@ io.on('connection',  async (socket) => {
 });
 
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+server.listen(PORT, async () => {
+  console.log(`Server running on port ${PORT}`);
+});
