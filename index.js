@@ -138,12 +138,20 @@ io.on('connection',  async (socket) => {
       collectionName: 'sensor_ultrasonic',
       socketEvent: 'sensor_ultrasonic_data',
       limit: 1
+    },
+    {
+      collectionName: 'sensor_transfer',
+      socketEvent: 'sensor_transfer_data',
+      limit: 1
     }
   ]
 
   const sendData = async (collectionName, socketEvent, limit) => {
     const collection = db.collection(collectionName);
     const data = await collection.find().sort({ _id: -1 }).limit(limit).toArray();
+    if (collectionName === 'sensor_transfer') {
+      console.log(data);
+    }
     socket.emit(socketEvent, data)
   }
 
