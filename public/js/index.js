@@ -12,7 +12,7 @@ socket.on('sensor_data', (data) => {
   updateLineCharts(chartsData);
   renderDataTable(data.reverse());
   if (parseFloat(data[data.length - 1].smoke_level) > 1000) {
-    alert(`Hay presencia de humo en el dispositivo ${data[data.length - 1].device}`);
+    // alert(`Hay presencia de humo en el dispositivo ${data[data.length - 1].device}`);
   }
 });
 
@@ -25,7 +25,7 @@ socket.on('sensor_ultrasonic_data', (data) => {
   
   updateDoughnutChart(chartData);  
   if (parseFloat(data[data.length - 1].tank_value) > 1000) {
-    alert(`Combustible del generador en reserva, por favor suministrar combustible lo antes posible`);
+    // alert(`Combustible del generador en reserva, por favor suministrar combustible lo antes posible`);
   }
 });
 
