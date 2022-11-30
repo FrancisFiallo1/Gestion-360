@@ -16,8 +16,8 @@ socket.on('sensor_data', (data) => {
   }
 });
 
-socket.on('sensor_transfer', (data) => {
-  console.log(data);
+socket.on('sensor_transfer_data', (data) => {
+  // console.log(data);
   const chartsData = data.slice(-20); // to show the last 20 elements in the charts
 
   updateTransferLineCharts(chartsData);

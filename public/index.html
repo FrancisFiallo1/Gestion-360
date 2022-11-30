@@ -136,17 +136,71 @@
           <span class="iconify inline" data-icon="mdi:beaker-minus-outline"></span>
         </div>
       </div>
+    </div>
+
+    <div id="planta_encendida" class="mt-3 text-center bg-white rounded-lg shadow-md shadow-2xl p-5 my-5" style="background-image: url('img/electric.gif'); background-size: cover;
+      background-repeat: no-repeat;
+      background-position-y: 52%;
+      height: 230px;
+      filter: invert(1);
+      display: flex;
+      align-items: center;
+      justify-content: center;">
+      <h2 class="text-xl text-white">
+        Planta Electrica encendida
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-2">
       <div class="bg-white rounded-lg border shadow-md shadow-2xl p-5 my-5">
         <div>
           <h2 class="text-2xl font-bold text-emerald-600 my-2 flex justify-center">
-            Voltage
+            Voltage (v)
             <span class="iconify mt-1" data-icon="mdi:lightning-bolt"></span>
           </h2>
           <canvas id="voltage_chart" height="100"></canvas>
         </div>
+
+        <div>
+          <h2 class="text-2xl font-bold text-emerald-600 my-2 flex justify-center">
+            Current (A)
+            <span class="iconify mt-1" data-icon="mdi:lightning-bolt"></span>
+          </h2>
+          <canvas id="current_chart" height="100"></canvas>
+        </div>
+
+        <div>
+          <h2 class="text-2xl font-bold text-emerald-600 my-2 flex justify-center">
+            Power (W)
+            <span class="iconify mt-1" data-icon="mdi:lightning-bolt"></span>
+          </h2>
+          <canvas id="power_chart" height="100"></canvas>
+        </div>
       </div>
       <div class="bg-white rounded-lg border shadow-md shadow-2xl p-5 my-5">
-        Hola
+        <div>
+          <h2 class="text-2xl font-bold text-emerald-600 my-2 flex justify-center">
+            Energy (kWh)
+            <span class="iconify mt-1" data-icon="mdi:lightning-bolt"></span>
+          </h2>
+          <canvas id="energy_chart" height="100"></canvas>
+        </div>
+
+        <div>
+          <h2 class="text-2xl font-bold text-emerald-600 my-2 flex justify-center">
+            Frequency (Hz)
+            <span class="iconify mt-1" data-icon="mdi:lightning-bolt"></span>
+          </h2>
+          <canvas id="frequency_chart" height="100"></canvas>
+        </div>
+
+        <div>
+          <h2 class="text-2xl font-bold text-emerald-600 my-2 flex justify-center">
+            PF
+            <span class="iconify mt-1" data-icon="mdi:lightning-bolt"></span>
+          </h2>
+          <canvas id="pf_chart" height="100"></canvas>
+        </div>
       </div>
     </div>
 

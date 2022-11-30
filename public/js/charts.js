@@ -71,13 +71,20 @@ const lineCharts = [
         },
         options: baseOptions
     },
-]
+];
+
+// Voltage: '113.40V',
+// Current: '0.02A',
+// Power: '0.60W',
+// Energy: '0.069kWh',
+// Frequency: '59.9Hz',
+// PF: '0.23_' -->
 
 const transferLineCharts = [
     // volt chart
     {
         elementID: 'voltage_chart',
-        dataProp: 'voltage',
+        dataProp: 'Voltage',
         type: 'line',
         instance: null,
         baseDataSet: {
@@ -89,7 +96,77 @@ const transferLineCharts = [
         },
         options: baseOptions
     },
-]
+    {
+        elementID: 'current_chart',
+        dataProp: 'Current',
+        type: 'line',
+        instance: null,
+        baseDataSet: {
+            label: 'Current',
+            backgroundColor: '#256389',
+            borderColor: '#256389',
+            data: [],
+            tension: 0.1,
+        },
+        options: baseOptions
+    },
+    {
+        elementID: 'power_chart',
+        dataProp: 'Power',
+        type: 'line',
+        instance: null,
+        baseDataSet: {
+            label: 'Power',
+            backgroundColor: '#256389',
+            borderColor: '#256389',
+            data: [],
+            tension: 0.1,
+        },
+        options: baseOptions
+    },
+    {
+        elementID: 'energy_chart',
+        dataProp: 'Energy',
+        type: 'line',
+        instance: null,
+        baseDataSet: {
+            label: 'Energy',
+            backgroundColor: '#256389',
+            borderColor: '#256389',
+            data: [],
+            tension: 0.1,
+        },
+        options: baseOptions
+    },
+    {
+        elementID: 'frequency_chart',
+        dataProp: 'Frequency',
+        type: 'line',
+        instance: null,
+        baseDataSet: {
+            label: 'Frequency',
+            backgroundColor: '#256389',
+            borderColor: '#256389',
+            data: [],
+            tension: 0.1,
+        },
+        options: baseOptions
+    },
+    {
+        elementID: 'pf_chart',
+        dataProp: 'PF',
+        type: 'line',
+        instance: null,
+        baseDataSet: {
+            label: 'PF',
+            backgroundColor: '#256389',
+            borderColor: '#256389',
+            data: [],
+            tension: 0.1,
+        },
+        options: baseOptions
+    },
+];
 
 const doughnutChart = {
     elementID: 'fuil_chart',
@@ -141,6 +218,22 @@ const renderCharts = () => {
         );
         chart.instance = chartInit
     });
+
+    // render line charts
+    transferLineCharts.forEach(chart => {
+        const chartInit= new Chart(
+            document.getElementById(chart.elementID), 
+            { 
+                type: chart.type, 
+                data: { 
+                    labels: [], 
+                    datasets: [chart.baseDataSet]  
+                },
+                options: chart.options
+            }
+        );
+        chart.instance = chartInit
+    });
     
     // render doughnut chart
     doughnutChart.instance = new Chart(document.getElementById(doughnutChart.elementID), doughnutChart);
@@ -160,17 +253,20 @@ const updateLineCharts = (data) => {
     const dates = data.map(data => { return moment(data.date).format('HH:mm:ss') });
     lineCharts.forEach(chart => {
         const messure = data.map(data => { return data[chart.dataProp] });
-        updateChart(chart.instance, dates, messure)
+        updateChart(chart.instance, dates, messure);
     })
 }
 
 // update every line chart
 const updateTransferLineCharts = (data) => {
-    const dates = data.map(data => { return moment(data.date).format('HH:mm:ss') });
-    transferLineCharts.forEach(chart => {
-        const messure = data.map(data => { return data[chart.dataProp] });
-        updateChart(chart.instance, dates, messure)
-    })
+    if (data.data) {
+        const dates = data.map(data => { return moment(data.date).format('HH:mm:ss') });
+        transferLineCharts.forEach(chart => {
+            const messure = data.map(data => { return data.data[chart.dataProp].replace(/[^\d.-]/g, '') });
+            updateChart(chart.instance, dates, messure);
+        });
+    };
+
 }
 
 // update doughnut chart 

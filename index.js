@@ -158,7 +158,7 @@ io.on('connection',  async (socket) => {
     {
       collectionName: 'sensor_transfer',
       socketEvent: 'sensor_transfer_data',
-      limit: 1
+      limit: 20
     }
   ]
 
@@ -166,9 +166,7 @@ io.on('connection',  async (socket) => {
     const collection = db.collection(collectionName);
     const data = await collection.find().sort({ _id: -1 }).limit(limit).toArray();
     if (collectionName === 'sensor_transfer' && data.length > 0) {
-      
       formatTransferData(data);
-      console.log(data);
     }
     socket.emit(socketEvent, data);
   }
