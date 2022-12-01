@@ -16,6 +16,11 @@ socket.on('sensor_data', (data) => {
   }
 });
 
+socket.on('sensor_camera_data', (data) => {
+  console.log(data);
+  renderCameraDataTable(data.reverse());
+});
+
 socket.on('sensor_transfer_data', (data) => {
   // console.log(data);
   const chartsData = data.slice(-20); // to show the last 20 elements in the charts

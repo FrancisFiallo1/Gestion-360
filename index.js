@@ -171,6 +171,11 @@ io.on('connection',  async (socket) => {
       collectionName: 'sensor_transfer',
       socketEvent: 'sensor_transfer_data',
       limit: 20
+    },
+    {
+      collectionName: 'sensor_camera',
+      socketEvent: 'sensor_camera_data',
+      limit: 20
     }
   ]
 

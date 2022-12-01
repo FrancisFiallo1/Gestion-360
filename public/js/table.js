@@ -28,12 +28,43 @@ const getHeaders = () => {
     </tr>
     `
 }
+
+const getCameraRow = ({ address, mac, date }) => {
+  return `
+  <tr>
+    <td class="border text-center px-8 py-4 text-green-500">${address}%</td>
+    <td class="border text-center px-8 py-4 text-green-500">${mac}</td>
+    <td class="border text-center px-8 py-4 text-green-500">${date}</td>
+  </tr>
+  `
+}
+
+
+const getCameraHeaders = () => {
+  return `
+  <tr>
+    <th class="bg-neutral-700 border text-center px-8 py-4">Humedad</th>
+    <th class="bg-neutral-700 border text-center px-8 py-4">Temp. °C</th>
+    <th class="bg-neutral-700 border text-center px-8 py-4">Temp. °F</th>
+    <th class="bg-neutral-700 border text-center px-8 py-4">Fecha</th>
+  </tr>
+  `
+}
   
 const renderDataTable = (data) => {
     const table = document.querySelector("#data-table");
-    table.innerHTML = getHeaders()
+    table.innerHTML = getHeaders();
     data.forEach(values => {
         const row = getRow(values);
         table.innerHTML += row;
     });
+}
+
+const renderCameraDataTable = (data) => {
+  const table = document.querySelector("#camera-data-table");
+  table.innerHTML = getCameraHeaders();
+  data.forEach(values => {
+      const row = getCameraRow(values);
+      table.innerHTML += row;
+  });
 }
