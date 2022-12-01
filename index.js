@@ -165,7 +165,7 @@ io.on('connection',  async (socket) => {
     {
       collectionName: 'sensor_ultrasonic',
       socketEvent: 'sensor_ultrasonic_data',
-      limit: 1
+      limit: 2
     },
     {
       collectionName: 'sensor_transfer',

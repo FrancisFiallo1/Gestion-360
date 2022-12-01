@@ -2,22 +2,32 @@ const socket = io();
 
 renderCharts()
 
+const filterList = document.getElementById('filterList');
+
+const setFilter = function (data) {
+  const unique = [...new Set(data.map(item => item.device))];
+  filterElements = '';
+  unique.forEach(deviceId => {
+    filterElements += getFilterItem(deviceId);
+  });
+  filterList.innerHTML = filterElements;
+}
+
 // when get sensor data
 socket.on('sensor_data', (data) => {
   
-  // console.log(data);
-
+  
+  setFilter(data);
   const chartsData = data.slice(-20); // to show the last 20 elements in the charts
 
   updateLineCharts(chartsData);
   renderDataTable(data.reverse());
-  if (parseFloat(data[data.length - 1].smoke_level) > 1000) {
+  if (parseFloat(data[data.length - 1].smoke_level) > 1500) {
     renderNotification('Humo Detectado',`Hay presencia de humo en el dispositivo ${data[data.length - 1].device}`);
   }
 });
 
 socket.on('sensor_camera_data', (data) => {
-  console.log(data);
   renderCameraDataTable(data.reverse());
 });
 
@@ -28,7 +38,7 @@ socket.on('sensor_transfer_data', (data) => {
   updateTransferLineCharts(chartsData);
 });
 
-let cont = 0;
+// let cont = 0;
 
 // when get sensor ultrasonic data
 socket.on('sensor_ultrasonic_data', (data) => {
@@ -38,16 +48,13 @@ socket.on('sensor_ultrasonic_data', (data) => {
   const chartData = data.at(-1); // to show the last element
   
   updateDoughnutChart(chartData);
-  if (cont < 2) {
-    cont++;
-    renderNotification('Combustible en Reserva','Combustible del generador en reserva, por favor suministrar combustible lo antes posible');
-  }
 
   if (parseFloat(data[data.length - 1].tank_value) > 1000) {
     renderNotification('Combustible en Reserva','Combustible del generador en reserva, por favor suministrar combustible lo antes posible');
   }
 
-  if (data[data.length - 1].litros_out > 0.05 && planta.style.display === 'flex') {
+  const consumido = parseFloat(data[0].litros_out) - parseFloat(data[data.length - 1].litros_out);
+  if (data[data.length - 1].litros_out !== data[0].litros_out && consumido > 0.05 && planta.style.display !== 'flex') {
     renderNotification('El Combustible esta siendo hurtado','Ha habido consumo de Combustible del generador estando apagado');
   }
 });
@@ -86,3 +93,16 @@ const btnCloseElement = document.getElementById('btnClose');
 btnCloseElement.addEventListener('click', toogleNotifCenter(), false);
 
 
+
+const filterButton = document.getElementById('dropdownDefault');
+const dropdownContainer = document.getElementById('dropdown');
+
+const toogleDropdown= function() {
+  if (dropdownContainer.style.display === "none") {
+    dropdownContainer.style.display = "block";
+  } else {
+    dropdownContainer.style.display = "none";
+  }
+};
+
+filterButton.onclick = toogleDropdown;

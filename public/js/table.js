@@ -65,10 +65,22 @@ const getNotificationMessage = (header, message) => {
   </div>
   `
 }
+
+const getFilterItem = (id) => {
+  return `
+  <li id="${id}">
+    <div class="flex items-center">
+      <input checked id="checkbox-item-2" type="checkbox" value=""
+        class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+      <label for="checkbox-item-2" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">${id}</label>
+    </div>
+  </li>
+`
+}
+
 const notificationContainer = document.getElementById('notif-contain');
 
 const renderNotification = (header, message) => {
-  console.log(notificationContainer.innerHTML);
   if (notificationContainer.textContent.includes("No hay alertas")) {
     notificationContainer.innerHTML = getNotificationMessage(header, message);
   } else {
