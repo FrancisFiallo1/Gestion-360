@@ -12,7 +12,7 @@ socket.on('sensor_data', (data) => {
   updateLineCharts(chartsData);
   renderDataTable(data.reverse());
   if (parseFloat(data[data.length - 1].smoke_level) > 1000) {
-    // alert(`Hay presencia de humo en el dispositivo ${data[data.length - 1].device}`);
+    renderNotification('Humo Detectado',`Hay presencia de humo en el dispositivo ${data[data.length - 1].device}`);
   }
 });
 
@@ -28,6 +28,8 @@ socket.on('sensor_transfer_data', (data) => {
   updateTransferLineCharts(chartsData);
 });
 
+let cont = 0;
+
 // when get sensor ultrasonic data
 socket.on('sensor_ultrasonic_data', (data) => {
 
@@ -35,9 +37,18 @@ socket.on('sensor_ultrasonic_data', (data) => {
   
   const chartData = data.at(-1); // to show the last element
   
-  updateDoughnutChart(chartData);  
+  updateDoughnutChart(chartData);
+  if (cont < 2) {
+    cont++;
+    renderNotification('Combustible en Reserva','Combustible del generador en reserva, por favor suministrar combustible lo antes posible');
+  }
+
   if (parseFloat(data[data.length - 1].tank_value) > 1000) {
-    // alert(`Combustible del generador en reserva, por favor suministrar combustible lo antes posible`);
+    renderNotification('Combustible en Reserva','Combustible del generador en reserva, por favor suministrar combustible lo antes posible');
+  }
+
+  if (data[data.length - 1].litros_out > 0.05 && planta.style.display === 'flex') {
+    renderNotification('El Combustible esta siendo hurtado','Ha habido consumo de Combustible del generador estando apagado');
   }
 });
 
@@ -57,5 +68,21 @@ const toogleModel = function() {
 
 settingsButton.onclick = toogleModel;
 
+// set the bell element
+const bellButton = document.getElementById('notifications-button');
+const notification = document.getElementById('defaultNotification');
+
+const toogleNotifCenter = function() {
+  if (notification.style.display === "none") {
+    notification.style.display = "block";
+  } else {
+    notification.style.display = "none";
+  }
+}
+
+bellButton.onclick = toogleNotifCenter;
+
+const btnCloseElement = document.getElementById('btnClose');
+btnCloseElement.addEventListener('click', toogleNotifCenter(), false);
 
 
