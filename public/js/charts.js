@@ -194,12 +194,25 @@ const doughnutChart = {
 }
 
 const planta = document.getElementById('planta_encendida');
+const planta_graf = document.getElementById('planta_grafics');
+
+const tooglePlantaGraf = function(displayToSet) {
+    if (displayToSet === 'disable') {
+        planta_graf.style.filter = 'grayscale(1)';
+        planta_graf.style.opacity = '0.5'
+
+    } else {
+        planta_graf.style.filter = 'none';
+        planta_graf.style.opacity = '1'
+    }
+}
 
 const tooglePlanta = function(displayToSet) {
   if (planta.style.display !== displayToSet) {
     planta.style.display = displayToSet;
   }
 }
+
   
 // render all charts
 const renderCharts = () => {
@@ -265,9 +278,11 @@ const updateTransferLineCharts = (data) => {
         const messure = data.map(data => {
             if (Object.keys(data.data).length > 0) {
                 if (data.data.hasOwnProperty('planta')) {
-                    tooglePlanta("flex");
+                    tooglePlanta('flex');
+                    tooglePlantaGraf('disable');
                 } else {
-                    tooglePlanta("none");
+                    tooglePlanta('none');
+                    tooglePlantaGraf('enable');
                     return data.data[chart.dataProp].replace(/[^\d.-]/g, '');
                 }
             } else {
