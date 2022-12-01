@@ -110,7 +110,8 @@ app.get('/api/save', async (req, res) => {
       const sensor_data = db.collection('sensor_camera');
       data = {
         name: address,
-        device: mac
+        device: mac,
+        date: date
       };
 
       sensor_data.insertOne(data);
