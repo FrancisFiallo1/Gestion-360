@@ -73,13 +73,6 @@ const lineCharts = [
     },
 ];
 
-// Voltage: '113.40V',
-// Current: '0.02A',
-// Power: '0.60W',
-// Energy: '0.069kWh',
-// Frequency: '59.9Hz',
-// PF: '0.23_' -->
-
 const transferLineCharts = [
     // volt chart
     {
@@ -199,6 +192,14 @@ const doughnutChart = {
         },
     }
 }
+
+const planta = document.getElementById('planta_encendida');
+
+const tooglePlanta = function(displayToSet) {
+  if (planta.style.display !== displayToSet) {
+    planta.style.display = displayToSet;
+  }
+}
   
 // render all charts
 const renderCharts = () => {
@@ -261,9 +262,21 @@ const updateLineCharts = (data) => {
 const updateTransferLineCharts = (data) => {
     const dates = data.map(data => { return moment(data.date).format('HH:mm:ss') });
     transferLineCharts.forEach(chart => {
-        const messure = data.map(data => { return data.data[chart.dataProp].replace(/[^\d.-]/g, '') });
+        const messure = data.map(data => {
+            if (Object.keys(data.data).length > 0) {
+                if (data.data.hasOwnProperty('planta')) {
+                    tooglePlanta("flex");
+                } else {
+                    tooglePlanta("none");
+                    return data.data[chart.dataProp].replace(/[^\d.-]/g, '');
+                }
+            } else {
+                console.log('Nothing here: ', data.data);
+            }
+        });
         updateChart(chart.instance, dates, messure);
     });
+    
 }
 
 // update doughnut chart 
