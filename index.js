@@ -57,7 +57,8 @@ app.get('/api/save', async (req, res) => {
       litros_in,
       litros_out,
       litros_totales,
-      data_transfer
+      data_transfer,
+      address
     } = req.query;
     const date = new Date();
     let data = {};
@@ -102,6 +103,16 @@ app.get('/api/save', async (req, res) => {
         date: date
       };
   
+      sensor_data.insertOne(data);
+    }
+
+    if (address) {
+      const sensor_data = db.collection('sensor_camera');
+      data = {
+        name: address,
+        device: mac
+      };
+
       sensor_data.insertOne(data);
     }
 
