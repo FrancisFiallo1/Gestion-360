@@ -43,9 +43,8 @@ const getCameraRow = ({ address, mac, date }) => {
 const getCameraHeaders = () => {
   return `
   <tr>
-    <th class="bg-neutral-700 border text-center px-8 py-4">Humedad</th>
-    <th class="bg-neutral-700 border text-center px-8 py-4">Temp. °C</th>
-    <th class="bg-neutral-700 border text-center px-8 py-4">Temp. °F</th>
+    <th class="bg-neutral-700 border text-center px-8 py-4">Nombre</th>
+    <th class="bg-neutral-700 border text-center px-8 py-4">Dispositivo</th>
     <th class="bg-neutral-700 border text-center px-8 py-4">Fecha</th>
   </tr>
   `
