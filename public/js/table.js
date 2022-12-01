@@ -29,11 +29,11 @@ const getHeaders = () => {
     `
 }
 
-const getCameraRow = ({ address, mac, date }) => {
+const getCameraRow = ({ name, device, date }) => {
   return `
   <tr>
-    <td class="border text-center px-8 py-4 text-green-500">${address}%</td>
-    <td class="border text-center px-8 py-4 text-green-500">${mac}</td>
+    <td class="border text-center px-8 py-4 text-green-500">${name}</td>
+    <td class="border text-center px-8 py-4 text-green-500">${device}</td>
     <td class="border text-center px-8 py-4 text-green-500">${date}</td>
   </tr>
   `
